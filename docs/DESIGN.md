@@ -1,5 +1,18 @@
 # Elevate Gym design direction
 
+## Approved visual references
+
+The following mockups are the approved visual source of truth for the
+homepage layout, composition, hierarchy, and responsive behavior:
+
+- `docs/references/approved-homepage-desktop.png`
+- `docs/references/approved-homepage-mobile.png`
+
+Use these files together with this document. They are visual references, not
+approved sources for business facts, final copy, photography rights, color
+values, or font licensing; the content guardrails in `AGENTS.md`,
+`docs/BRAND.md`, and `docs/ARCHITECTURE.md` still apply.
+
 ## Experience principles
 
 - Editorial and fitness-led, not a software landing page.
