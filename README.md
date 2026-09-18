@@ -1,36 +1,53 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Elevate Gym
 
-## Getting Started
+Marketing website for **Elevate Gym** — **Gym · Pattaya**.
 
-First, run the development server:
+The project is currently the generated application foundation. The planned
+initial pages are Home, Gym, Memberships, and Contact; their design has not yet
+been implemented.
+
+## Stack
+
+- Next.js 16.3.5 with App Router
+- React 19
+- TypeScript
+- Tailwind CSS 4
+- ESLint 9
+
+## Local development
+
+Install the existing dependencies, then start the development server:
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Available checks:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+npm run lint
+npm run build
+```
 
-## Learn More
+## Project documentation
 
-To learn more about Next.js, take a look at the following resources:
+- [Brand direction](docs/BRAND.md)
+- [Design and responsive rules](docs/DESIGN.md)
+- [Architecture and content model](docs/ARCHITECTURE.md)
+- [Instructions for coding agents](AGENTS.md)
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Read these documents before implementation. The installed Next.js 16 guides
+in `node_modules/next/dist/docs/` are the framework source of truth for future
+code changes.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Scope
 
-## Deploy on Vercel
+The initial release is a public marketing site only. Authentication, member
+accounts, payments, QR access, and an admin system are explicitly out of scope.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Membership prices are provisional and must remain centralized in typed
+structured data. Unconfirmed business details must use explicit placeholders;
+do not invent them.
