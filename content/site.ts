@@ -13,17 +13,37 @@ export type PlaceholderLink<Id extends string = string> = {
   status: "to-be-confirmed";
 };
 
-export type GymSlide = {
-  id: "gym-01" | "gym-02" | "gym-03";
-  src: null;
-  alt: null;
+export type TemporaryConceptImage = {
+  src: `/images/concept/${string}.png`;
+  alt: string;
   concept: true;
+  temporary: true;
+  objectPosition: string;
 };
+
+export type GymSlide = TemporaryConceptImage & {
+  id: "gym-01" | "gym-02" | "gym-03";
+};
+
+export type GymSlides = readonly [
+  GymSlide,
+  GymSlide,
+  GymSlide,
+  ...GymSlide[],
+];
 
 export const siteIdentity = {
   name: "Elevate Gym",
   descriptor: "Gym · Pattaya",
 } as const;
+
+export const heroConceptImage = {
+  src: "/images/concept/hero-concept.png",
+  alt: "Temporary concept photograph of a woman wrapping her hands in a gym.",
+  concept: true,
+  temporary: true,
+  objectPosition: "30% center",
+} as const satisfies TemporaryConceptImage;
 
 export const homeNavigationItem = {
   id: "home",
@@ -78,7 +98,28 @@ export const legalItems = [
 ] as const satisfies readonly PlaceholderLink<"privacy" | "terms">[];
 
 export const gymSlides = [
-  { id: "gym-01", src: null, alt: null, concept: true },
-  { id: "gym-02", src: null, alt: null, concept: true },
-  { id: "gym-03", src: null, alt: null, concept: true },
-] as const satisfies readonly GymSlide[];
+  {
+    id: "gym-01",
+    src: "/images/concept/gym-main-concept.png",
+    alt: "Temporary concept photograph of a man performing a seated dumbbell curl in a gym.",
+    concept: true,
+    temporary: true,
+    objectPosition: "50% 45%",
+  },
+  {
+    id: "gym-02",
+    src: "/images/concept/gym-preview-equipment-concept.png",
+    alt: "Temporary concept photograph of resistance equipment in a gym.",
+    concept: true,
+    temporary: true,
+    objectPosition: "50% center",
+  },
+  {
+    id: "gym-03",
+    src: "/images/concept/gym-preview-weights-concept.png",
+    alt: "Temporary concept photograph of weight plates in a gym.",
+    concept: true,
+    temporary: true,
+    objectPosition: "55% center",
+  },
+] as const satisfies GymSlides;

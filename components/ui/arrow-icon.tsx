@@ -1,8 +1,9 @@
 export type ArrowIconProps = {
   direction: "left" | "right";
+  className?: string;
 };
 
-export function ArrowIcon({ direction }: ArrowIconProps) {
+export function ArrowIcon({ className, direction }: ArrowIconProps) {
   const path =
     direction === "left"
       ? "M19 12H5m6-6-6 6 6 6"
@@ -11,7 +12,7 @@ export function ArrowIcon({ direction }: ArrowIconProps) {
   return (
     <svg
       aria-hidden="true"
-      className="size-4 shrink-0"
+      className={`shrink-0 ${className ?? "size-4"}`}
       fill="none"
       focusable="false"
       viewBox="0 0 24 24"

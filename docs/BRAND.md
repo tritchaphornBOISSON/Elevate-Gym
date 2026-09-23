@@ -25,8 +25,10 @@ facility imagery, excessive cards, and software-style feature grids.
 - **Deep charcoal/black:** primary ground and visual weight.
 - **Warm cream:** welcoming contrast and the membership ribbon.
 - **White:** clarity, copy, and high-contrast details.
-- **Champagne gold:** restrained accent for rules, emphasis, and selected
-  interaction details; never the dominant surface.
+- **Champagne:** the single restrained accent for italic emphasis, rules,
+  outlines, arrows, focus indicators, and selected interaction details; never
+  the dominant surface. Do not introduce a separate yellow/gold or peach
+  accent treatment.
 
 Exact color values remain **[To be confirmed: brand color tokens]**. Preserve
 a premium, warm contrast and verify accessible text contrast before approval.

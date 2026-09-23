@@ -2,7 +2,7 @@ import Image, { type StaticImageData } from "next/image";
 
 export type EditorialImageProps =
   | {
-      src: StaticImageData;
+      src: StaticImageData | string;
       alt: string;
       concept?: false;
       sizes: string;

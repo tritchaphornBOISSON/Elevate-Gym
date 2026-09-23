@@ -5,8 +5,7 @@
   --charcoal: #101718;
   --cream: #f4eee7;
   --white: #ffffff;
-  --champagne-gold: #d7b300;
-  --peach: #e4a27f;
+  --accent: #e4a27f;
   --concept-surface: #1b2425;
   --background: var(--charcoal);
   --foreground: var(--white);
@@ -18,8 +17,7 @@
   --color-charcoal: var(--charcoal);
   --color-cream: var(--cream);
   --color-white: var(--white);
-  --color-champagne-gold: var(--champagne-gold);
-  --color-peach: var(--peach);
+  --color-accent: var(--accent);
   --color-concept-surface: var(--concept-surface);
   --font-display: var(--font-geist-implementation);
   --font-body: var(--font-geist-implementation);
@@ -41,7 +39,7 @@ body {
 }
 
 ::selection {
-  background: var(--champagne-gold);
+  background: var(--accent);
   color: var(--charcoal);
 }
 
@@ -49,20 +47,6 @@ body {
   text-shadow:
     0 1px 2px rgb(0 0 0 / 80%),
     0 4px 18px rgb(0 0 0 / 45%);
-}
-
-.image-scrim-bottom::after {
-  position: absolute;
-  inset: 38% 0 0;
-  content: "";
-  pointer-events: none;
-  background: linear-gradient(to bottom, transparent, var(--charcoal));
-}
-
-@media (min-width: 64rem) {
-  .image-scrim-bottom::after {
-    display: none;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {

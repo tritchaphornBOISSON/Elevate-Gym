@@ -39,7 +39,7 @@
 
 ## Approved responsive interpretation
 
-The desktop reference uses a wide editorial canvas: an overlaid wordmark and pill navigation; a hero split between a left photograph and right headline; a two-column Gym section; a full-width curved cream membership ribbon; a contact image with copy on its left; and a single-row footer. The mobile reference stacks the hero and Gym copy, keeps the two hero actions side by side, presents the carousel as one dominant image plus two equal smaller previews, changes memberships to a two-by-two price grid, overlays contact copy on the photograph, and centers the footer.
+The desktop reference uses a wide editorial canvas: an overlaid wordmark and pill navigation; a seamless full-width hero photograph with the athlete toward the left and headline on the right; a two-column Gym section; a full-width curved cream membership ribbon; a contact image with copy on its left; and a single-row footer. The mobile reference keeps the hero photograph full-bleed, stacks the Gym copy, keeps the two hero actions side by side, presents the carousel as one dominant image plus two equal smaller previews, changes memberships to a two-by-two price grid, overlays contact copy on the photograph, and centers the footer.
 
 The expanded mobile menu is not shown in the approved reference. The approved implementation is a non-modal disclosure panel: the hamburger toggles a dark panel immediately below the header with Home, Gym, Memberships, and Contact links in one vertical list. It does not trap focus. `Escape`, a selected link, or a viewport transition to desktop closes it and returns focus when appropriate.
 
@@ -161,7 +161,7 @@ Keep `concept: true` and `provisional: true` in typed data and documentation, no
 
 - [ ] **Step 5: Replace starter tokens and metadata defaults**
 
-In `app/globals.css`, define semantic design tokens sampled from the approved mockups and annotate them as provisional implementation tokens pending final brand confirmation. Include the charcoal ground, warm cream, white, champagne-gold accent, peach accent, and replaceable font variables. Keep only base/reset rules, reusable curved-section treatments, and effects that are materially clearer in CSS than Tailwind utilities. Use Tailwind classes—including `gap-8`/`py-8` where they represent the approved 32px mobile rhythm—for component layout, spacing, type, responsive behavior, focus states, and ordinary transitions. Do not add global selectors for individual header, hero, carousel, membership, contact, or footer components.
+In `app/globals.css`, define semantic design tokens sampled from the approved mockups and annotate them as provisional implementation tokens pending final brand confirmation. Include the charcoal ground, warm cream, white, one unified champagne accent, and replaceable font variables. The champagne token is the only accent source for italic highlights, rules, underlines, eyebrow and CTA text, arrows, outlines, navigation borders, carousel controls, focus indicators, and later shared accent treatments; do not keep separate yellow/gold or peach accent tokens. Keep only base/reset rules, reusable curved-section treatments, and effects that are materially clearer in CSS than Tailwind utilities. Use Tailwind classes—including `gap-8`/`py-8` where they represent the approved 32px mobile rhythm—for component layout, spacing, type, responsive behavior, focus states, and ordinary transitions. Do not add global selectors for individual header, hero, carousel, membership, contact, or footer components.
 
 Add one reduced-motion block that removes non-essential transitions and smooth scrolling:
 
@@ -282,7 +282,7 @@ Checkpoint gate: report the changed files and command results, then stop for rev
 
 - [ ] **Step 1: Render the shared header as a Server Component**
 
-Place the header over the hero as in both references. Render “Elevate Gym” as a text-based wordmark and descriptive Home link until an approved logo asset exists, include the short champagne-gold underline, and use a semantic `<nav aria-label="Primary navigation">`. At `lg` and above, render the three section links inside the outlined pill. Do not add `"use client"` to `site-header.tsx`; use Tailwind utilities for all ordinary header layout and styling.
+Place the header over the hero as in both references. Render “Elevate Gym” as a text-based wordmark and descriptive Home link until an approved logo asset exists, include the short champagne underline, and use a semantic `<nav aria-label="Primary navigation">`. At `lg` and above, render the three section links inside the champagne-outlined pill. Do not add `"use client"` to `site-header.tsx`; use Tailwind utilities for all ordinary header layout and styling.
 
 - [ ] **Step 2: Implement only the mobile disclosure interaction on the client**
 
@@ -320,11 +320,11 @@ Checkpoint gate: report the changed files and command/browser results, then stop
 
 - [ ] **Step 1: Create the semantic hero**
 
-Use `<section aria-labelledby="home-heading">` and one `h1`. Use “Train. Progress. Elevate.” only if that exact headline is approved before this checkpoint; otherwise use the existing working name “Elevate Gym” as the `h1` while preserving the approved hierarchy. Omit unapproved supporting copy instead of rendering a `[To be confirmed]` label. Link the two actions to `#membership` and `#gym`.
+Use `<section aria-labelledby="home-heading">` and one `h1`. Render the approved headline “TRAIN. PROGRESS. Elevate.” with sans-serif emphasis for the first two lines and limited italic-serif emphasis for “Elevate.” Render the approved description “A premium destination gym built for real training, meaningful progress and a stronger you.” Link the two actions to `#membership` and `#gym` in the approved order.
 
 - [ ] **Step 2: Implement the two responsive compositions**
 
-At Tailwind `lg` (`1024px`) and above, use a two-column composition with the image container on the left and text on the right; do not add a central divider. Below `lg`, keep tablet widths fluid and stack the image-led hero with copy over or immediately below the lower image area according to the reference. Keep both mobile CTAs side by side and preserve usable labels/tap targets. Use Tailwind utilities for grid, spacing, responsive type, and sizing; reserve `clamp()` or custom CSS only where Tailwind cannot express the approved fluid scaling cleanly. Use stable aspect-ratio/minimum-block-size utilities to prevent layout shift.
+Render `public/images/concept/hero-concept.png` as an absolute, full-width `next/image` layer using `fill` and responsive sizing. At Tailwind `lg` (`1024px`) and above, preserve the athlete toward the left, keep the text composition on the right, and add a restrained right-side dark gradient for legibility without creating a separate rectangular panel or visible vertical divider. Below `lg`, keep the photograph full-bleed with a responsive focal point that preserves the athlete and a restrained lower gradient behind the copy. Treat the asset as explicitly temporary concept photography with honest alt text and responsive optimization. Keep both mobile CTAs side by side and preserve usable labels/tap targets. Size the italic “Elevate.” with a stronger fluid proportion than the first two lines, using `clamp()` or the established responsive type pattern, so it matches the approved emphasis without overflowing at 320px. Use stable minimum-block-size utilities to prevent layout shift. Replace the concept image with approved, licensed final photography before launch.
 
 - [ ] **Step 3: Replace the starter page with a server composition shell**
 
@@ -352,7 +352,7 @@ Checkpoint gate: report the changed files and command/browser results, then stop
 
 - [ ] **Step 1: Render Gym copy on the server**
 
-Create `<section id="gym">` with an `h2`, eyebrow, concise approved body copy, and a `#gym` CTA that targets the current section rather than an unfinished route. Omit unapproved copy instead of showing a placeholder label. At `lg`, place copy left and carousel right; below `lg`, keep widths fluid and stack copy above carousel. Use Tailwind utilities for component layout and styling. Do not move section copy or image data into the client file.
+Create `<section id="gym">` with the approved eyebrow “THE GYM,” title “BUILT FOR REAL TRAINING,” description “A complete training environment designed for strength, movement and meaningful progress.”, and CTA “DISCOVER THE GYM.” Keep the CTA pointed at `#gym` rather than an unfinished route. Size the italic “REAL” with a slightly larger responsive proportion so its perceived weight is integrated with “BUILT FOR,” without overflowing at 320px. At `lg`, place copy left and carousel right; below `lg`, keep widths fluid and stack copy above carousel. Use Tailwind utilities for component layout and styling. Do not move section copy or image data into the client file.
 
 - [ ] **Step 2: Implement deterministic infinite looping**
 
@@ -369,11 +369,11 @@ const next = () =>
   setActiveIndex((index) => wrapIndex(index + 1, slides.length));
 ```
 
-Require at least three slide descriptors in the typed content. Until licensed images exist, each slide renders the neutral concept placeholder defined in Task 2 without visible status text or invented alt text. Render the active slide largest and the previous/next previews at equal approximately 60% visual scale. Reorder presentation from the derived indices; do not clone a large track or add autoplay timers. Express the size relationships and responsive arrangement with Tailwind utilities where practical.
+Require at least three slide descriptors in the typed content. Use `public/images/concept/gym-main-concept.png` as the initial active image, followed by `public/images/concept/gym-preview-equipment-concept.png` and `public/images/concept/gym-preview-weights-concept.png`. Mark every asset explicitly as temporary concept photography in structured data, use honest accessible alt text, and replace all three with approved, licensed final photography before launch. At `lg`, render the active slide largest on the left with the next and previous previews at equal approximately 60% visual scale on the right. Below `lg`, center the large active slide and show equal previous and next previews peeking from its left and right sides, with controls at the outer edges and no horizontal page overflow at 320px. Reorder presentation from the derived indices; do not clone a large track or add autoplay timers. Express the size relationships and responsive arrangement with Tailwind utilities where practical.
 
 - [ ] **Step 3: Add controls and keyboard semantics**
 
-Wrap the visual set in a focusable `role="region"` with `aria-roledescription="carousel"` and an accessible label. Use gold previous/next `<button type="button">` controls with visible focus rings and `aria-label`s. Left Arrow selects previous and Right Arrow selects next while focus is within the carousel. Let Enter/Space retain native button behavior. Add an `aria-live="polite"` visually hidden status such as “Gym image 2 of 3”; the mockup's ban on displayed counters remains intact.
+Wrap the visual set in a focusable `role="region"` with `aria-roledescription="carousel"` and an accessible label. Use champagne previous/next `<button type="button">` controls with visible champagne focus rings and `aria-label`s. On desktop, place both controls completely outside the image group with a clear gap so they do not touch or overlap image borders. On mobile, preserve at least a 44×44px interactive target while rendering an approximately 32px visible champagne circle with a smaller arrow icon. Left Arrow selects previous and Right Arrow selects next while focus is within the carousel. Let Enter/Space retain native button behavior. Add an `aria-live="polite"` visually hidden status such as “Gym image 2 of 3”; the mockup's ban on displayed counters remains intact.
 
 - [ ] **Step 4: Add pointer swipe without blocking vertical page scroll**
 
@@ -394,6 +394,7 @@ Run `npm run typecheck` and `npm run lint`, then verify in the browser:
 5. No autoplay, dots, visible counters, or captions appear.
 6. The client boundary contains only carousel interaction, not the whole Gym section or page.
 7. Reduced-motion emulation removes the transition without removing functionality.
+8. Desktop keeps the active image on the left with two smaller previews on the right; mobile centers the active image between peeking previous/next previews without overflowing at 320px.
 
 Checkpoint gate: report the changed files and command/browser results, then stop for review and explicit approval. Do not begin Task 6 until approved.
 
@@ -456,7 +457,7 @@ Create `<section id="contact">` with an `h2`, a `#contact` CTA, and only confirm
 
 - [ ] **Step 2: Create a semantic responsive footer**
 
-Use `<footer>`, a home-linked text wordmark, `<nav aria-label="Footer navigation">`, a “Follow us” group, and an optional legal group. At `lg`, use the reference's horizontal distribution; below `lg`, keep widths fluid, center every group, and draw the short champagne-gold underline beneath the wordmark. Express layout, spacing, type, and responsive behavior with Tailwind utilities.
+Use `<footer>`, a home-linked text wordmark, `<nav aria-label="Footer navigation">`, a “Follow us” group, and an optional legal group. At `lg`, use the reference's horizontal distribution; below `lg`, keep widths fluid, center every group, and draw the short champagne underline beneath the wordmark. Express layout, spacing, type, and responsive behavior with Tailwind utilities.
 
 - [ ] **Step 3: Keep social and legal placeholders honest**
 
@@ -504,11 +505,11 @@ Confirm that ordinary component layout, spacing, typography, focus states, and r
 
 - [ ] **Step 2: Tune desktop behavior against the approved desktop mockup**
 
-At Tailwind `lg` (`1024px`) and a wider desktop viewport, compare: content max-width; hero split; no central divider; header pill position; Gym text/carousel balance; active versus 60%-scale previews; curve depth; four-column membership rhythm; contact overlay; footer distribution; and absence of overflow. Keep tablet widths below `lg` fluid. Prefer Tailwind's grid, sizing, aspect-ratio, and responsive utilities over screenshot-specific CSS; use `min()`, `max()`, or `clamp()` only when utilities cannot cleanly reproduce the approved fluid behavior.
+At Tailwind `lg` (`1024px`) and a wider desktop viewport, compare: content max-width; seamless full-width hero image with athlete left, copy right, and no visible divider; header pill position; Gym text/carousel balance; active versus 60%-scale previews; curve depth; four-column membership rhythm; contact overlay; footer distribution; and absence of overflow. Keep tablet widths below `lg` fluid. Prefer Tailwind's grid, sizing, aspect-ratio, and responsive utilities over screenshot-specific CSS; use `min()`, `max()`, or `clamp()` only when utilities cannot cleanly reproduce the approved fluid behavior.
 
 - [ ] **Step 3: Tune mobile behavior against the approved mobile mockup**
 
-At the 806px source-image proportion and practical browser widths of 320px, 375px, 430px, and representative tablet widths below 1024px, compare: stacked hero crop container; side-by-side CTA width; 32px major-section rhythm; Gym copy above carousel; one dominant plus two equal previews; two-by-two membership grid; direct cream-curve-to-contact-image transition; contact copy on image; and centered footer. Confirm no label truncation, overlap, abrupt tablet breakpoint behavior, or horizontal scroll.
+At the 806px source-image proportion and practical browser widths of 320px, 375px, 430px, and representative tablet widths below 1024px, compare: full-bleed hero crop and focal point; side-by-side CTA width; 32px major-section rhythm; Gym copy above carousel; one dominant plus two equal previews; two-by-two membership grid; direct cream-curve-to-contact-image transition; contact copy on image; and centered footer. Confirm no label truncation, overlap, abrupt tablet breakpoint behavior, or horizontal scroll.
 
 - [ ] **Step 4: Audit semantic HTML and accessibility**
 

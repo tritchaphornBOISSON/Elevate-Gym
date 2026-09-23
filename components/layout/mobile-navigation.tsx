@@ -60,7 +60,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
         aria-controls={panelId}
         aria-expanded={open}
         aria-label={open ? "Close navigation menu" : "Open navigation menu"}
-        className="flex size-11 items-center justify-center rounded-md text-white drop-shadow-md transition-colors hover:bg-white/10 focus-visible:bg-charcoal/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-white"
+        className="flex size-11 items-center justify-center rounded-md text-white drop-shadow-md transition-colors hover:bg-white/10 hover:text-accent focus-visible:bg-charcoal/80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-accent"
         onClick={() => setOpen((currentOpen) => !currentOpen)}
       >
         <span
@@ -92,7 +92,7 @@ export function MobileNavigation({ items }: MobileNavigationProps) {
                 className="border-b border-white/10 last:border-b-0"
               >
                 <Link
-                  className="flex min-h-11 items-center font-display text-sm font-medium uppercase tracking-[0.12em] text-white transition-colors hover:text-champagne-gold focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-champagne-gold"
+                  className="flex min-h-11 items-center font-display text-sm font-medium uppercase tracking-[0.12em] text-white transition-colors hover:text-accent focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-accent"
                   href={item.href}
                   onClick={() => setOpen(false)}
                 >

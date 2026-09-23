@@ -12,19 +12,19 @@ export type ActionLinkProps = {
 
 const variantClasses: Record<ActionLinkProps["variant"], string> = {
   light:
-    "bg-white px-3 text-charcoal hover:bg-cream focus-visible:outline-champagne-gold sm:px-5",
+    "bg-white px-3 text-charcoal hover:bg-cream focus-visible:outline-accent sm:px-5",
   outline:
-    "border border-champagne-gold px-3 text-white hover:bg-champagne-gold hover:text-charcoal focus-visible:outline-white sm:px-5",
+    "border border-accent px-3 text-white hover:bg-accent hover:text-charcoal focus-visible:outline-accent sm:px-5",
   dark:
-    "bg-charcoal px-3 text-white hover:bg-white hover:text-charcoal focus-visible:outline-charcoal sm:px-5",
-  text: "px-0 text-peach hover:text-white focus-visible:outline-champagne-gold",
+    "bg-charcoal px-3 text-white hover:bg-white hover:text-charcoal focus-visible:outline-accent sm:px-5",
+  text: "px-0 text-accent hover:text-white focus-visible:outline-accent",
 };
 
 const arrowClasses: Record<ActionLinkProps["variant"], string> = {
-  light: "text-champagne-gold",
-  outline: "text-champagne-gold group-hover:text-charcoal",
-  dark: "text-champagne-gold group-hover:text-charcoal",
-  text: "text-champagne-gold group-hover:text-white",
+  light: "text-accent",
+  outline: "text-accent group-hover:text-charcoal",
+  dark: "text-accent group-hover:text-charcoal",
+  text: "text-accent group-hover:text-white",
 };
 
 export function ActionLink({
