@@ -7,6 +7,7 @@
   --white: #ffffff;
   --champagne-gold: #d7b300;
   --peach: #e4a27f;
+  --concept-surface: #1b2425;
   --background: var(--charcoal);
   --foreground: var(--white);
 }
@@ -19,6 +20,7 @@
   --color-white: var(--white);
   --color-champagne-gold: var(--champagne-gold);
   --color-peach: var(--peach);
+  --color-concept-surface: var(--concept-surface);
   --font-display: var(--font-geist-implementation);
   --font-body: var(--font-geist-implementation);
   --font-accent: var(--font-cormorant-implementation);
