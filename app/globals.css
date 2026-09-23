@@ -51,6 +51,20 @@ body {
     0 4px 18px rgb(0 0 0 / 45%);
 }
 
+.image-scrim-bottom::after {
+  position: absolute;
+  inset: 38% 0 0;
+  content: "";
+  pointer-events: none;
+  background: linear-gradient(to bottom, transparent, var(--charcoal));
+}
+
+@media (min-width: 64rem) {
+  .image-scrim-bottom::after {
+    display: none;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
