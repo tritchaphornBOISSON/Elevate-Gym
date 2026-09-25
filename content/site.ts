@@ -22,14 +22,22 @@ export type TemporaryConceptImage = {
 };
 
 export type GymSlide = TemporaryConceptImage & {
-  id: "gym-01" | "gym-02" | "gym-03";
+  id:
+    | "gym-01"
+    | "gym-02"
+    | "gym-03"
+    | "gym-04"
+    | "gym-05"
+    | "gym-06";
 };
 
 export type GymSlides = readonly [
   GymSlide,
   GymSlide,
   GymSlide,
-  ...GymSlide[],
+  GymSlide,
+  GymSlide,
+  GymSlide,
 ];
 
 export const siteIdentity = {
@@ -116,10 +124,34 @@ export const gymSlides = [
   },
   {
     id: "gym-03",
+    src: "/images/concept/gym-woman-rdl-concept.png",
+    alt: "Temporary concept photograph of a woman performing a barbell Romanian deadlift in a gym.",
+    concept: true,
+    temporary: true,
+    objectPosition: "50% 48%",
+  },
+  {
+    id: "gym-04",
     src: "/images/concept/gym-preview-weights-concept.png",
     alt: "Temporary concept photograph of weight plates in a gym.",
     concept: true,
     temporary: true,
     objectPosition: "55% center",
+  },
+  {
+    id: "gym-05",
+    src: "/images/concept/gym-squat-rack-concept.png",
+    alt: "Temporary concept photograph of a man performing a barbell back squat inside a squat rack.",
+    concept: true,
+    temporary: true,
+    objectPosition: "50% 45%",
+  },
+  {
+    id: "gym-06",
+    src: "/images/concept/gym-dumbbells-concept.png",
+    alt: "Temporary concept photograph of rows of dumbbells on a rack in a gym.",
+    concept: true,
+    temporary: true,
+    objectPosition: "50% center",
   },
 ] as const satisfies GymSlides;

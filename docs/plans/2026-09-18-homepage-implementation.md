@@ -342,6 +342,7 @@ Checkpoint gate: report the changed files and command/browser results, then stop
 
 - Create: `components/home/gym-section.tsx`
 - Create: `components/home/gym-carousel.tsx`
+- Create: `components/home/gym-carousel-model.ts`
 - Modify: `app/page.tsx`
 - Modify: `app/globals.css`
 
@@ -356,24 +357,18 @@ Create `<section id="gym">` with the approved eyebrow “THE GYM,” title “BU
 
 - [ ] **Step 2: Implement deterministic infinite looping**
 
-In `gym-carousel.tsx`, add `"use client"` and keep only the minimal browser behavior. Use one `activeIndex` and modular arithmetic:
+In `gym-carousel.tsx`, add `"use client"` and keep only the minimal browser behavior. Keep the committed `activeIndex`, current adjacent direction, and queued navigation intent in a small pure carousel model. Use modular arithmetic for every index:
 
 ```ts
 const wrapIndex = (index: number, length: number) =>
-  (index + length) % length;
-
-const previous = () =>
-  setActiveIndex((index) => wrapIndex(index - 1, slides.length));
-
-const next = () =>
-  setActiveIndex((index) => wrapIndex(index + 1, slides.length));
+  ((index % length) + length) % length;
 ```
 
-Require at least three slide descriptors in the typed content. Use `public/images/concept/gym-main-concept.png` as the initial active image, followed by `public/images/concept/gym-preview-equipment-concept.png` and `public/images/concept/gym-preview-weights-concept.png`. Mark every asset explicitly as temporary concept photography in structured data, use honest accessible alt text, and replace all three with approved, licensed final photography before launch. At `lg`, render the active slide largest on the left with the next and previous previews at equal approximately 60% visual scale on the right. Below `lg`, center the large active slide and show equal previous and next previews peeking from its left and right sides, with controls at the outer edges and no horizontal page overflow at 320px. Reorder presentation from the derived indices; do not clone a large track or add autoplay timers. Express the size relationships and responsive arrangement with Tailwind utilities where practical.
+Define exactly six typed temporary concept slides in this order: `public/images/concept/gym-main-concept.png` (seated dumbbell-curl athlete), `public/images/concept/gym-preview-equipment-concept.png` (strength machine), `public/images/concept/gym-woman-rdl-concept.png` (woman performing a Romanian deadlift), `public/images/concept/gym-preview-weights-concept.png` (weight plates), `public/images/concept/gym-squat-rack-concept.png` (squat-rack athlete), and `public/images/concept/gym-dumbbells-concept.png` (dumbbell rack). Mark every asset explicitly as temporary concept photography in structured data, use honest accessible alt text, and replace all six with approved, licensed final photography before launch. Render all slides with stable slide-ID identity while exposing only three positions. At every breakpoint, calculate `[active - 1, active, active + 1]` with modular wrapping. At `lg`, center the large active slide between equal previous and next previews at approximately 60% visual scale with clear, consistent gaps. Below `lg`, preserve the centered active slide and show the previews peeking from its left and right sides, with controls at the outer edges and no horizontal page overflow at 320px. Derive positions with modular arithmetic for any valid slide count; do not clone a large track or add autoplay timers. Express the size relationships and responsive arrangement with Tailwind utilities where practical.
 
 - [ ] **Step 3: Add controls and keyboard semantics**
 
-Wrap the visual set in a focusable `role="region"` with `aria-roledescription="carousel"` and an accessible label. Use champagne previous/next `<button type="button">` controls with visible champagne focus rings and `aria-label`s. On desktop, place both controls completely outside the image group with a clear gap so they do not touch or overlap image borders. On mobile, preserve at least a 44×44px interactive target while rendering an approximately 32px visible champagne circle with a smaller arrow icon. Left Arrow selects previous and Right Arrow selects next while focus is within the carousel. Let Enter/Space retain native button behavior. Add an `aria-live="polite"` visually hidden status such as “Gym image 2 of 3”; the mockup's ban on displayed counters remains intact.
+Wrap the visual set in a focusable `role="region"` with `aria-roledescription="carousel"` and an accessible label. Use champagne previous/next `<button type="button">` controls with visible champagne focus rings and `aria-label`s. On desktop, place both controls completely outside the image group with a clear gap so they do not touch or overlap image borders. On mobile, preserve at least a 44×44px interactive target while rendering an approximately 32px visible champagne circle with a smaller arrow icon. Left Arrow selects previous and Right Arrow selects next while focus is within the carousel. Let Enter/Space retain native button behavior. Add an `aria-live="polite"` visually hidden status such as “Gym image 2 of 6”; the mockup's ban on displayed counters remains intact.
 
 - [ ] **Step 4: Add pointer swipe without blocking vertical page scroll**
 
@@ -381,7 +376,7 @@ Track horizontal pointer start/end positions, use pointer capture, and change sl
 
 - [ ] **Step 5: Respect reduced motion**
 
-Use a short transform/opacity transition in normal mode. Under `prefers-reduced-motion: reduce`, switch slide arrangements without perceptible animation. The carousel must remain fully operable with motion disabled.
+Use an approximately 450ms transform-based directional position-and-scale transition with `cubic-bezier(0.22, 1, 0.36, 1)` easing in normal mode. Next moves the left preview through the clipped left edge, shrinks the active slide into the left-preview position, grows the right preview into the center, and brings the following slide through the clipped right edge; previous reverses that movement, and swipe uses the same directional transition. Keep at least one active image visible throughout and avoid layout jumps at the modular loop boundary. Process one adjacent transition at a time, commit it from the relevant `transitionend`, and queue additional previous/next intent in arrival order so rapid input cannot corrupt spacing or slide order. Under `prefers-reduced-motion: reduce`, bypass movement and commit navigation immediately. The carousel must remain fully operable with motion disabled.
 
 - [ ] **Step 6: Verify the carousel checkpoint**
 
@@ -394,7 +389,8 @@ Run `npm run typecheck` and `npm run lint`, then verify in the browser:
 5. No autoplay, dots, visible counters, or captions appear.
 6. The client boundary contains only carousel interaction, not the whole Gym section or page.
 7. Reduced-motion emulation removes the transition without removing functionality.
-8. Desktop keeps the active image on the left with two smaller previews on the right; mobile centers the active image between peeking previous/next previews without overflowing at 320px.
+8. Desktop and mobile center the active image between previous/next previews; desktop keeps clear gaps and mobile preserves peeking previews without overflowing at 320px.
+9. The six-slide sequence keeps exactly three images visible, preserves stable identity during repeated navigation, and crosses both modular loop boundaries without a layout jump or blank frame.
 
 Checkpoint gate: report the changed files and command/browser results, then stop for review and explicit approval. Do not begin Task 6 until approved.
 

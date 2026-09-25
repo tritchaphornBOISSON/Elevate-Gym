@@ -1,14 +1,27 @@
 "use client";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import type {
   KeyboardEvent as ReactKeyboardEvent,
   PointerEvent as ReactPointerEvent,
+  TransitionEvent as ReactTransitionEvent,
 } from "react";
 
 import { ArrowIcon } from "@/components/ui/arrow-icon";
 import { EditorialImage } from "@/components/ui/editorial-image";
 import type { GymSlide } from "@/content/site";
+
+import {
+  completeTransition,
+  createCarouselState,
+  getResponsiveSlidePosition,
+  getVisualActiveIndex,
+  requestNavigation,
+  settleTransitions,
+  type DesktopSlidePosition,
+  type MobileSlidePosition,
+  type NavigationDirection,
+} from "./gym-carousel-model";
 
 export type GymCarouselProps = {
   slides: readonly GymSlide[];
@@ -20,49 +33,97 @@ type SwipeStart = {
   y: number;
 };
 
-type SlidePosition = "previous" | "active" | "next";
-
 const SWIPE_THRESHOLD_PX = 48;
 
-const wrapIndex = (index: number, length: number) =>
-  (index + length) % length;
+const mobilePositionClasses: Record<MobileSlidePosition, string> = {
+  "far-before": "-translate-x-[278%] scale-[0.6] opacity-0",
+  before: "-translate-x-[202%] scale-[0.6] opacity-0",
+  previous: "-translate-x-[132%] scale-[0.6] opacity-70",
+  active: "-translate-x-1/2 scale-100 opacity-100",
+  next: "translate-x-[32%] scale-[0.6] opacity-70",
+  after: "translate-x-[102%] scale-[0.6] opacity-0",
+  "far-after": "translate-x-[178%] scale-[0.6] opacity-0",
+};
 
-const positionClasses: Record<SlidePosition, string> = {
-  previous: "order-1 lg:order-3",
-  active: "order-2 lg:order-1",
-  next: "order-3 lg:order-2",
+const desktopPositionClasses: Record<DesktopSlidePosition, string> = {
+  "far-before":
+    "lg:-translate-x-[250%] lg:scale-[0.6] lg:opacity-0",
+  before: "lg:-translate-x-[195%] lg:scale-[0.6] lg:opacity-0",
+  previous:
+    "lg:-translate-x-[132.25%] lg:scale-[0.6] lg:opacity-70",
+  active: "lg:-translate-x-1/2 lg:scale-100 lg:opacity-100",
+  next:
+    "lg:translate-x-[32.25%] lg:scale-[0.6] lg:opacity-70",
+  after: "lg:translate-x-[110%] lg:scale-[0.6] lg:opacity-0",
+  "far-after": "lg:translate-x-[180%] lg:scale-[0.6] lg:opacity-0",
 };
 
 export function GymCarousel({ slides }: GymCarouselProps) {
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [carouselState, setCarouselState] = useState(() =>
+    createCarouselState(0, slides.length),
+  );
+  const [prefersReducedMotion, setPrefersReducedMotion] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+  );
   const swipeStartRef = useRef<SwipeStart | null>(null);
 
   if (slides.length < 3) {
     throw new Error("GymCarousel requires at least three slides.");
   }
 
-  const previous = () => {
-    setActiveIndex((index) => wrapIndex(index - 1, slides.length));
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const handleMotionPreference = () => {
+      setPrefersReducedMotion(mediaQuery.matches);
+
+      if (mediaQuery.matches) {
+        setCarouselState((state) => settleTransitions(state, slides.length));
+      }
+    };
+
+    mediaQuery.addEventListener("change", handleMotionPreference);
+    return () =>
+      mediaQuery.removeEventListener("change", handleMotionPreference);
+  }, [slides.length]);
+
+  const navigate = (direction: NavigationDirection) => {
+    setCarouselState((state) =>
+      requestNavigation(
+        state,
+        direction,
+        slides.length,
+        prefersReducedMotion,
+      ),
+    );
   };
 
-  const next = () => {
-    setActiveIndex((index) => wrapIndex(index + 1, slides.length));
-  };
+  const previous = () => navigate(-1);
+  const next = () => navigate(1);
 
-  const visibleSlides: readonly {
-    slideIndex: number;
-    position: SlidePosition;
-  }[] = [
-    {
-      slideIndex: wrapIndex(activeIndex - 1, slides.length),
-      position: "previous",
-    },
-    { slideIndex: activeIndex, position: "active" },
-    {
-      slideIndex: wrapIndex(activeIndex + 1, slides.length),
-      position: "next",
-    },
-  ];
+  const handleTransitionEnd = (
+    event: ReactTransitionEvent<HTMLDivElement>,
+    slideIndex: number,
+  ) => {
+    if (
+      event.target !== event.currentTarget ||
+      event.propertyName !== "translate"
+    ) {
+      return;
+    }
+
+    setCarouselState((state) => {
+      if (
+        state.direction === null ||
+        getVisualActiveIndex(state, slides.length) !== slideIndex
+      ) {
+        return state;
+      }
+
+      return completeTransition(state, slides.length);
+    });
+  };
 
   const handleKeyDown = (event: ReactKeyboardEvent<HTMLDivElement>) => {
     if (event.key === "ArrowLeft") {
@@ -137,6 +198,12 @@ export function GymCarousel({ slides }: GymCarouselProps) {
     releasePointer(event);
   };
 
+  const activeIndex = carouselState.activeIndex;
+  const visualActiveIndex = getVisualActiveIndex(
+    carouselState,
+    slides.length,
+  );
+
   return (
     <div
       aria-label="Gym image gallery"
@@ -150,26 +217,37 @@ export function GymCarousel({ slides }: GymCarouselProps) {
       tabIndex={0}
     >
       <div className="overflow-hidden">
-        <div className="grid w-[122%] -translate-x-[9%] grid-cols-[0.6fr_1fr_0.6fr] items-center gap-2 sm:gap-3 lg:w-full lg:translate-x-0 lg:grid-cols-[1.667fr_1fr_1fr]">
-          {visibleSlides.map(({ slideIndex, position }) => {
-            const slide = slides[slideIndex];
-            const isActive = position === "active";
+        <div className="relative aspect-[1.353] w-full lg:aspect-[1.65]">
+          {slides.map((slide, slideIndex) => {
+            const position = getResponsiveSlidePosition(
+              slideIndex,
+              visualActiveIndex,
+              slides.length,
+            );
+            const isVisualActive = slideIndex === visualActiveIndex;
+            const isCommittedActive = slideIndex === activeIndex;
 
             return (
               <div
-                className={`aspect-[3/4] min-w-0 transition-[transform,opacity] duration-300 ease-out motion-reduce:transition-none ${positionClasses[position]} ${
-                  isActive ? "scale-100 opacity-100" : "scale-[0.98] opacity-70"
+                aria-hidden={!isCommittedActive}
+                className={`pointer-events-none absolute top-1/2 left-1/2 z-10 aspect-[3/4] w-[55.45%] -translate-y-1/2 transition-[translate,scale,opacity] duration-[450ms] ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none lg:w-[44.55%] ${mobilePositionClasses[position.mobile]} ${desktopPositionClasses[position.desktop]} ${
+                  carouselState.direction === null
+                    ? ""
+                    : "will-change-[translate,scale,opacity]"
                 }`}
                 key={slide.id}
+                onTransitionEnd={(event) =>
+                  handleTransitionEnd(event, slideIndex)
+                }
               >
                 <EditorialImage
                   alt={slide.alt}
                   className={`h-full w-full rounded-md border ${
-                    isActive ? "border-white/30" : "border-white/15"
+                    isVisualActive ? "border-white/30" : "border-white/15"
                   }`}
                   objectPosition={slide.objectPosition}
                   sizes={
-                    isActive
+                    isVisualActive
                       ? "(min-width: 1024px) 28vw, 56vw"
                       : "(min-width: 1024px) 17vw, 34vw"
                   }

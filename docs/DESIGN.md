@@ -28,9 +28,12 @@ Use these temporary concept-photography assets during implementation:
 - `public/images/concept/hero-concept.png`
 - `public/images/concept/gym-main-concept.png`
 - `public/images/concept/gym-preview-equipment-concept.png`
+- `public/images/concept/gym-woman-rdl-concept.png`
 - `public/images/concept/gym-preview-weights-concept.png`
+- `public/images/concept/gym-squat-rack-concept.png`
+- `public/images/concept/gym-dumbbells-concept.png`
 
-All four images are temporary concept photography and must be replaced by
+All seven images are temporary concept photography and must be replaced by
 approved, licensed final photography before launch.
 
 ## Experience principles
@@ -114,14 +117,31 @@ behavior is **[To be confirmed: menu presentation and interaction]**.
   rendering an approximately 32px visible champagne circle and a smaller
   arrow.
 - Loop infinitely and support swipe gestures on touch devices.
-- On desktop, keep the active image largest on the left, with two equal
-  preview images at approximately 60% scale on the right.
+- Use six slides in this order: seated dumbbell-curl athlete, strength
+  machine, woman performing a Romanian deadlift, weight plates, squat-rack
+  athlete, and dumbbell rack. Show only three slides at one time.
+- On desktop, center the large active image between equal previous and next
+  previews at approximately 60% scale. Calculate those slots as
+  `[active - 1, active, active + 1]` with modular wrapping and keep clear,
+  consistent gaps between cards.
 - On mobile, center the large active image and show equal previous and next
   previews peeking from its left and right sides. Keep the champagne controls
-  at the outer edges and prevent horizontal page overflow at 320px.
-- Use a smooth, restrained transition.
+  at the outer edges and prevent horizontal page overflow at 320px. Calculate
+  those slots as `[active - 1, active, active + 1]` with modular wrapping.
+- Use an approximately 450ms directional position-and-scale transition with
+  `cubic-bezier(0.22, 1, 0.36, 1)` easing. Next moves the left preview out,
+  shrinks the active slide into the left-preview position, grows the right
+  preview into the center, and brings the following slide through the clipped
+  right edge; previous reverses that movement. Swipe uses the same motion.
+  Keep content visible throughout and avoid a layout jump at the infinite-loop
+  boundary. Serialize rapid navigation: animate one adjacent move at a time
+  and queue additional previous/next intent until the current transition
+  commits.
+- Under `prefers-reduced-motion: reduce`, change positions immediately without
+  movement while preserving every control and status update.
 - Do not display dots, counters, or captions.
-- The final image sequence remains **[To be confirmed]**.
+- All six carousel images are temporary concept photography and require
+  replacement with approved, licensed final photography before launch.
 
 ### Membership preview
 
