@@ -353,7 +353,7 @@ Checkpoint gate: report the changed files and command/browser results, then stop
 
 - [ ] **Step 1: Render Gym copy on the server**
 
-Create `<section id="gym">` with the approved eyebrow “THE GYM,” title “BUILT FOR REAL TRAINING,” description “A complete training environment designed for strength, movement and meaningful progress.”, and CTA “DISCOVER THE GYM.” Keep the CTA pointed at `#gym` rather than an unfinished route. Size the italic “REAL” with a slightly larger responsive proportion so its perceived weight is integrated with “BUILT FOR,” without overflowing at 320px. At `lg`, place copy left and carousel right; below `lg`, keep widths fluid and stack copy above carousel. Use Tailwind utilities for component layout and styling. Do not move section copy or image data into the client file.
+Create `<section id="gym">` with the approved eyebrow “THE GYM,” title “BUILT FOR REAL TRAINING,” description “A complete training environment designed for strength, movement and meaningful progress.”, and CTA “DISCOVER THE GYM.” Keep the CTA pointed at `#gym` rather than an unfinished route. Use the shared homepage section-title scale for the complete `h2`; the italic “REAL” inherits the same size and line-height as “BUILT FOR” while retaining its champagne serif styling. At `lg`, place copy left and carousel right; below `lg`, keep widths fluid and stack copy above carousel. Use Tailwind utilities for component layout and styling. Do not move section copy or image data into the client file.
 
 - [ ] **Step 2: Implement deterministic infinite looping**
 
@@ -413,11 +413,42 @@ Create `<section id="membership">` and map over `membershipPasses`; do not resta
 
 - [ ] **Step 2: Match the ribbon layouts**
 
-Use Tailwind utilities for the warm-cream surface, text, spacing, and responsive price grid. At `lg`, present four equal columns separated by restrained rules; below `lg`, keep tablet widths fluid and use the approved two-by-two mobile grid with a subtle central cross, centered heading, and CTA below. Put only the reusable curved top/bottom treatment in `app/globals.css` when pseudo-elements, `clip-path`, or an equivalent effect would be materially unclear in utilities; hide decorative curves from the accessibility tree and avoid bitmap curve assets.
+Use Tailwind utilities for the warm-cream surface, text, spacing, and responsive price grid. At `lg`, present four equal columns separated by restrained vertical rules; below `lg`, keep tablet widths fluid and use the approved two-by-two mobile grid with one continuous subtle vertical divider and one continuous subtle horizontal divider crossing cleanly at the center, no outer border, a centered heading, and the CTA below. Prefer grid-level pseudo-elements or equivalent single continuous lines so cell borders cannot double in thickness. Put only the reusable curved top/bottom treatment in `app/globals.css` when pseudo-elements, `clip-path`, or an equivalent effect would be materially unclear in utilities; hide decorative curves from the accessibility tree and avoid bitmap curve assets.
+
+The final approved heading is one semantic `h2` with the continuous accessible
+text “MEMBERSHIPS THAT FIT YOUR STAY.” At `lg` and above, render the entire
+heading on one line with only the inline “YOUR STAY” phrase in the champagne
+italic serif. Below `lg`, use the intentional two-line composition
+“MEMBERSHIPS” / “THAT FIT YOUR STAY,” keeping the bold sans “THAT FIT” and
+champagne italic “YOUR STAY” together on the second line without wrapping.
+Render the approved description
+“Flexible access for a day, a week or a longer commitment.” immediately
+below. Apply the same shared homepage section-title scale used by the Gym `h2`:
+32px by default, 36px from 360px, 48px from 640px through `lg`, and 60px from
+1280px, with a `0.92` line-height. “YOUR STAY” inherits the same size and
+line-height while retaining its champagne italic-serif style. Keep this shared
+role reusable for future homepage `h2` titles such as “COME TRAIN WITH US,”
+without changing the larger hero `h1`. On desktop, increase price amounts
+moderately to approximately 42–46px without making THB labels disproportionately
+large.
 
 - [ ] **Step 3: Enforce the 32px mobile rhythm and joined transitions**
 
 Use Tailwind's 32px spacing utilities (`gap-8`, `py-8`, or equivalent directional utilities) for mobile section content and unjoined major-section gaps. The Gym-to-membership and membership-to-contact boundaries are intentional curve/image joins, so do not insert an extra gray/black strip or 32px external gap there. The contact photograph/neutral placeholder begins directly below the lower cream curve.
+
+Preserve 32px of clear breathing room after the carousel before the upper
+curve begins. Keep approximately 32px between the price grid and CTA on
+mobile and 40px on desktop, plus at least 32px between the CTA and the lower
+curve. Make both curves symmetrical, full-width, rounder, and approximately
+1.5 times deeper than the initial implementation without creating seams or
+horizontal overflow at 320px.
+
+Use the exact same cream token for the curve pseudo-elements and membership
+surface, and add no border, outline, shadow, or uncovered layer boundary at
+their joins. Curve-boundary seams are prohibited. Where separate curve and
+surface layers otherwise meet exactly, use a controlled 1px overlap that
+preserves the approved outer curve depth. The centered cross inside the mobile
+price grid is intentional and must remain visually distinct from these joins.
 
 - [ ] **Step 4: Verify structured-data and layout behavior**
 

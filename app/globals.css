@@ -49,6 +49,59 @@ body {
     0 4px 18px rgb(0 0 0 / 45%);
 }
 
+.homepage-section-title {
+  font-size: 2rem;
+  line-height: 0.92;
+}
+
+@media (min-width: 22.5rem) {
+  .homepage-section-title {
+    font-size: 2.25rem;
+  }
+}
+
+@media (min-width: 40rem) {
+  .homepage-section-title {
+    font-size: 3rem;
+  }
+}
+
+@media (min-width: 80rem) {
+  .homepage-section-title {
+    font-size: 3.75rem;
+  }
+}
+
+.membership-ribbon {
+  --membership-curve-depth: clamp(1.875rem, 4.5vw, 4.125rem);
+  --membership-curve-overlap: 1px;
+
+  margin-block: var(--membership-curve-depth);
+}
+
+.membership-ribbon::before,
+.membership-ribbon::after {
+  position: absolute;
+  inset-inline: 0;
+  z-index: 0;
+  height: calc(
+    var(--membership-curve-depth) + var(--membership-curve-overlap)
+  );
+  background: var(--cream);
+  content: "";
+  pointer-events: none;
+}
+
+.membership-ribbon::before {
+  bottom: calc(100% - var(--membership-curve-overlap));
+  border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+}
+
+.membership-ribbon::after {
+  top: calc(100% - var(--membership-curve-overlap));
+  border-radius: 0 0 50% 50% / 0 0 100% 100%;
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

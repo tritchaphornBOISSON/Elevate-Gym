@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 
 import { GymSection } from "@/components/home/gym-section";
 import { HeroSection } from "@/components/home/hero-section";
+import { MembershipPreview } from "@/components/home/membership-preview";
 import { SiteHeader } from "@/components/layout/site-header";
 
 export const metadata: Metadata = {
@@ -16,6 +17,7 @@ export default function Home() {
       <main className="flex-1">
         <HeroSection />
         <GymSection />
+        <MembershipPreview />
       </main>
     </>
   );

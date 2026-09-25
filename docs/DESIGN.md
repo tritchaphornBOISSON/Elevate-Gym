@@ -101,10 +101,14 @@ behavior is **[To be confirmed: menu presentation and interaction]**.
 - Keep “TRAIN.” and “PROGRESS.” as the primary sans-serif structure, then size
   the italic “Elevate.” with a stronger responsive proportion so it reads as
   an integrated third line rather than a small annotation.
-- In the Gym heading, size the italic “REAL” slightly larger than its
-  surrounding sans-serif words so their perceived visual weight is balanced.
-- Use fluid responsive sizing such as `clamp()` or the established responsive
-  type pattern, and confirm neither treatment overflows at 320px.
+- Use one shared responsive section-title scale for every homepage `h2`,
+  including “BUILT FOR REAL TRAINING,” “MEMBERSHIPS THAT FIT YOUR STAY,” and
+  the future “COME TRAIN WITH US.” The scale is 32px by default, 36px from
+  360px, 48px from 640px through `lg`, and 60px from 1280px, with a shared
+  `0.92` line-height. Mixed-font phrases such as “REAL” and “YOUR STAY” inherit
+  that size and line-height while retaining their champagne italic-serif style.
+- Confirm the hero remains larger than section titles and the section-title
+  treatment does not overflow at 320px.
 
 ### Carousel
 
@@ -148,6 +152,35 @@ behavior is **[To be confirmed: menu presentation and interaction]**.
 Show the four provisional pass options without implying terms, inclusions,
 renewal, payment methods, or availability. Source all values from the shared
 structured membership data described in `docs/ARCHITECTURE.md`.
+
+Use one semantic heading with the continuous accessible text “MEMBERSHIPS THAT
+FIT YOUR STAY.” At `lg` and above, keep the complete heading on one line and
+style only the inline “YOUR STAY” phrase in the champagne italic serif. Below
+`lg`, use the intentional two-line composition “MEMBERSHIPS” / “THAT FIT YOUR
+STAY,” keeping the bold sans “THAT FIT” and champagne italic “YOUR STAY”
+together on the second line without wrapping.
+Follow it with the approved description “Flexible access for a day, a week or
+a longer commitment.” Use the shared homepage section-title scale for the
+complete heading, including “YOUR STAY.” On desktop, size the price amounts at
+approximately 42–46px without enlarging the THB labels disproportionately.
+
+Below `lg`, use a two-by-two price grid with one continuous subtle vertical
+divider and one continuous subtle horizontal divider crossing cleanly at the
+center; do not render an outer border. At `lg`, use four equal columns with
+subtle vertical dividers only. Keep approximately 32px between the grid and
+CTA on mobile and 40px on desktop. Preserve 32px of clear space after the
+carousel before the upper curve and at least 32px between the CTA and lower
+curve.
+
+Both cream curves are symmetrical, full-width, and approximately 1.5 times
+deeper than the initial implementation. Keep them rounded without sharp
+corners, horizontal overflow, seams, or an intervening gray/background strip.
+The curves and membership surface must use the same cream token and must not
+introduce borders, outlines, shadows, or uncovered layer boundaries at their
+joins. Curve-boundary seams are prohibited; when the curve and surface are
+separate layers, maintain a controlled 1px overlap while preserving the
+approved outer curve depth. The centered cross inside the mobile price grid is
+intentional and is not a curve-boundary seam.
 
 ### Contact and footer
 

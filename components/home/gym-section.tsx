@@ -22,12 +22,12 @@ export function GymSection() {
           </div>
 
           <h2
-            className="font-display text-[2rem] leading-[0.92] font-semibold tracking-[-0.035em] text-white uppercase min-[360px]:text-4xl sm:text-5xl lg:text-5xl xl:text-6xl"
+            className="homepage-section-title font-display font-semibold tracking-[-0.035em] text-white uppercase"
             id="gym-heading"
           >
             <span className="block whitespace-nowrap">
               BUILT FOR{" "}
-              <span className="font-accent text-[1.18em] leading-none font-medium text-accent italic">
+              <span className="font-accent font-medium text-accent italic">
                 REAL
               </span>
             </span>

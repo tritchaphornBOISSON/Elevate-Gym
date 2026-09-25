@@ -10,6 +10,12 @@ test("carousel renders six stable slides with one committed accessible image", a
   assert.equal(response.status, 200);
 
   const html = await response.text();
+  const gymHeading = html.match(
+    /<h2(?=[^>]*id="gym-heading")[^>]*>/,
+  );
+
+  assert.ok(gymHeading, "expected the Gym h2");
+  assert.match(gymHeading[0], /class="[^"]*homepage-section-title[^"]*"/);
 
   for (const slide of gymSlides) {
     assert.equal(
